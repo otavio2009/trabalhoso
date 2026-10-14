@@ -1,0 +1,387 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inteligência Artificial: Medo ou Fascínio?</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #10152f, #30245f, #126e82);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 750px;
+      background: rgba(255, 255, 255, 0.09);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 35px;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      color: #70f0ff;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #70f0ff;
+    }
+
+    p {
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .destaque {
+      color: #70f0ff;
+      font-weight: bold;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      margin-top: 12px;
+      border: none;
+      border-radius: 10px;
+      background: #70f0ff;
+      color: #10152f;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    .alternativa {
+      background: rgba(255, 255, 255, 0.12);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      text-align: left;
+    }
+
+    .alternativa:hover {
+      background: rgba(112, 240, 255, 0.2);
+    }
+
+    .progresso {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      margin-bottom: 25px;
+      overflow: hidden;
+    }
+
+    #barra {
+      height: 100%;
+      width: 0%;
+      background: #70f0ff;
+      transition: width 0.3s;
+    }
+
+    .oculto {
+      display: none;
+    }
+
+    .resultado {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      white-space: pre-line;
+    }
+
+    footer {
+      margin-top: 25px;
+      text-align: center;
+      font-size: 0.8rem;
+      opacity: 0.7;
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        padding: 23px;
+      }
+
+      h1 {
+        font-size: 1.7rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+
+    <!-- TELA INICIAL -->
+    <section id="inicio">
+      <h1>🤖 Inteligência Artificial</h1>
+      <h2>Medo ou fascínio?</h2>
+
+      <p>
+        A inteligência artificial está transformando o mundo.
+        Ela consegue responder perguntas, criar imagens, produzir
+        áudios e auxiliar em diversas atividades.
+      </p>
+
+      <p>
+        Mas como você se sente diante dessa tecnologia?
+        Descubra respondendo às perguntas deste quiz!
+      </p>
+
+      <button onclick="iniciarQuiz()">Começar o quiz</button>
+    </section>
+
+    <!-- TELA DO QUIZ -->
+    <section id="quiz" class="oculto">
+      <div class="progresso">
+        <div id="barra"></div>
+      </div>
+
+      <p id="contador"></p>
+      <h2 id="pergunta"></h2>
+      <div id="alternativas"></div>
+    </section>
+
+    <!-- TELA DE RESULTADO -->
+    <section id="fim" class="oculto">
+      <h1>✨ Seu resultado</h1>
+      <h2 id="tituloResultado"></h2>
+      <p id="textoResultado" class="resultado"></p>
+
+      <button onclick="reiniciarQuiz()">Refazer o quiz</button>
+    </section>
+
+    <footer>
+      Projeto educativo sobre Inteligência Artificial
+    </footer>
+
+  </main>
+
+  <script>
+    const perguntas = [
+      {
+        enunciado:
+          "Assim que saiu da escola você se depara com uma nova tecnologia, um chat que consegue responder dúvidas e gerar imagens e áudios hiper-realistas. Qual é seu primeiro pensamento?",
+
+        alternativas: [
+          {
+            texto: "Isso é assustador!",
+            perfil: "critico",
+            afirmacao: [
+              "No início, você ficou com medo do que essa tecnologia pode fazer.",
+              "Achou assustador pensar na velocidade com que a tecnologia está avançando."
+            ]
+          },
+          {
+            texto: "Isso é maravilhoso!",
+            perfil: "entusiasta",
+            afirmacao: [
+              "Você quis descobrir como usar a IA no seu dia a dia.",
+              "Foi atrás de vídeos, artigos e informações sobre como utilizar essa tecnologia."
+            ]
+          }
+        ]
+      },
+
+      {
+        enunciado:
+          "Você precisa fazer um trabalho escolar. Como usaria a inteligência artificial?",
+
+        alternativas: [
+          {
+            texto: "Pesquisaria sobre os riscos e verificaria as informações.",
+            perfil: "critico",
+            afirmacao: [
+              "Você considera importante verificar as respostas da IA.",
+              "Prefere analisar criticamente as informações antes de utilizá-las."
+            ]
+          },
+          {
+            texto: "Usaria a IA para ter ideias e organizar o trabalho.",
+            perfil: "entusiasta",
+            afirmacao: [
+              "Você vê a inteligência artificial como uma ferramenta de apoio aos estudos.",
+              "Gosta de explorar novas maneiras de aprender e criar."
+            ]
+          }
+        ]
+      },
+
+      {
+        enunciado:
+          "Uma imagem criada por inteligência artificial parece completamente real. O que você faz?",
+
+        alternativas: [
+          {
+            texto: "Procuro descobrir se a imagem é verdadeira.",
+            perfil: "critico",
+            afirmacao: [
+              "Você se preocupa com a desinformação e os conteúdos falsos.",
+              "Considera essencial verificar a origem das imagens."
+            ]
+          },
+          {
+            texto: "Fico curioso para saber como ela foi criada.",
+            perfil: "entusiasta",
+            afirmacao: [
+              "Você tem curiosidade sobre o funcionamento das novas tecnologias.",
+              "Gosta de descobrir as possibilidades criativas da inteligência artificial."
+            ]
+          }
+        ]
+      },
+
+      {
+        enunciado:
+          "Qual deveria ser a principal preocupação ao desenvolver uma inteligência artificial?",
+
+        alternativas: [
+          {
+            texto: "Garantir segurança, privacidade e uso responsável.",
+            perfil: "critico",
+            afirmacao: [
+              "Você acredita que o desenvolvimento tecnológico precisa de responsabilidade.",
+              "Valoriza a privacidade, a segurança e a transparência."
+            ]
+          },
+          {
+            texto: "Explorar novas possibilidades para ajudar as pessoas.",
+            perfil: "entusiasta",
+            afirmacao: [
+              "Você acredita no potencial da IA para solucionar problemas.",
+              "Enxerga oportunidades de inovação em diferentes áreas."
+            ]
+          }
+        ]
+      }
+    ];
+
+    let indiceAtual = 0;
+    let respostas = [];
+
+    function iniciarQuiz() {
+      document.getElementById("inicio").classList.add("oculto");
+      document.getElementById("fim").classList.add("oculto");
+      document.getElementById("quiz").classList.remove("oculto");
+
+      indiceAtual = 0;
+      respostas = [];
+
+      mostrarPergunta();
+    }
+
+    function mostrarPergunta() {
+      const perguntaAtual = perguntas[indiceAtual];
+
+      document.getElementById("contador").textContent =
+        `Pergunta ${indiceAtual + 1} de ${perguntas.length}`;
+
+      document.getElementById("pergunta").textContent =
+        perguntaAtual.enunciado;
+
+      document.getElementById("barra").style.width =
+        `${(indiceAtual / perguntas.length) * 100}%`;
+
+      const areaAlternativas =
+        document.getElementById("alternativas");
+
+      areaAlternativas.innerHTML = "";
+
+      perguntaAtual.alternativas.forEach((alternativa) => {
+        const botao = document.createElement("button");
+
+        botao.textContent = alternativa.texto;
+        botao.classList.add("alternativa");
+
+        botao.addEventListener("click", () => {
+          respostas.push(alternativa);
+          indiceAtual++;
+
+          if (indiceAtual < perguntas.length) {
+            mostrarPergunta();
+          } else {
+            mostrarResultado();
+          }
+        });
+
+        areaAlternativas.appendChild(botao);
+      });
+    }
+
+    function mostrarResultado() {
+      document.getElementById("quiz").classList.add("oculto");
+      document.getElementById("fim").classList.remove("oculto");
+
+      document.getElementById("barra").style.width = "100%";
+
+      const critico = respostas.filter(
+        resposta => resposta.perfil === "critico"
+      ).length;
+
+      const entusiasta = respostas.filter(
+        resposta => resposta.perfil === "entusiasta"
+      ).length;
+
+      let titulo = "";
+      let introducao = "";
+
+      if (critico > entusiasta) {
+        titulo = "O observador crítico 🔎";
+        introducao =
+          "Você tende a analisar a inteligência artificial com cautela. " +
+          "Para você, compreender os riscos e utilizar a tecnologia " +
+          "de forma responsável é essencial.";
+      } else if (entusiasta > critico) {
+        titulo = "O explorador tecnológico 🚀";
+        introducao =
+          "Você demonstra entusiasmo pelas possibilidades da inteligência " +
+          "artificial. Gosta de aprender, experimentar e descobrir " +
+          "como essa tecnologia pode ajudar no cotidiano.";
+      } else {
+        titulo = "O equilíbrio entre inovação e cautela ⚖️";
+        introducao =
+          "Você combina curiosidade com preocupação. Reconhece as " +
+          "oportunidades da inteligência artificial, mas também considera " +
+          "importante refletir sobre seus riscos e limites.";
+      }
+
+      const reflexoes = respostas.flatMap(
+        resposta => resposta.afirmacao
+      );
+
+      document.getElementById("tituloResultado").textContent = titulo;
+
+      document.getElementById("textoResultado").textContent =
+        introducao + "\n\nSuas reflexões:\n• " +
+        reflexoes.join("\n• ") +
+        "\n\nLembre-se: a inteligência artificial é uma ferramenta. " +
+        "Seu impacto depende de como as pessoas escolhem utilizá-la.";
+    }
+
+    function reiniciarQuiz() {
+      iniciarQuiz();
+    }
+  </script>
+</body>
+</html>
